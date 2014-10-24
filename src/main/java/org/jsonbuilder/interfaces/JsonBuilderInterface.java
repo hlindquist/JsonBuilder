@@ -1,8 +1,6 @@
 package org.jsonbuilder.interfaces;
 
-import org.jsonbuilder.JsonArrayBuilder;
 import org.jsonbuilder.JsonBuilder;
-import org.jsonbuilder.JsonObjectBuilder;
 
 public interface JsonBuilderInterface {
   

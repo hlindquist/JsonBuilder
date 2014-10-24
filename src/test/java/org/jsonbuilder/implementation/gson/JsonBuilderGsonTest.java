@@ -1,6 +1,7 @@
 package org.jsonbuilder.implementation.gson;
 
 import org.jsonbuilder.JsonBuilderTest;
+import org.jsonbuilder.implementations.gson.GsonAdapter;
 import org.jsonbuilder.interfaces.JsonAdapter;
 
 public class JsonBuilderGsonTest extends JsonBuilderTest {
