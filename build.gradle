@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+  mavenCentral()
+}
+
+version = '0.1.2'
+
+dependencies {
+  compile 'org.mongodb:mongo-java-driver:2.12.3'
+  compile 'junit:junit:4.11'
+  compile 'com.google.code.gson:gson:2.2'
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
+  compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.4'
+  compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
+}
