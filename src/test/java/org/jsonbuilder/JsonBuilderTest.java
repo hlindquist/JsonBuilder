@@ -33,7 +33,8 @@ public abstract class JsonBuilderTest {
       .append("{\"object\":7}")
       .append("]");
     String nill = null;
-    Object json = new JsonBuilder(this.getAdapter()).array("string", "stringtwo").
+    Object json = new JsonBuilder(this.getAdapter()).
+      array("string", "stringtwo").
       array(5, 223).
       array(true, false).
       array(nill, nill).
