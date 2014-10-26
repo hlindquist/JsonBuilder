@@ -1,9 +1,11 @@
 package org.jsonbuilder.implementations.gson;
 
 import org.jsonbuilder.interfaces.ArrayNode;
+import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.ObjectNode;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 public class GsonObjectNode implements ObjectNode {
@@ -52,6 +54,11 @@ public class GsonObjectNode implements ObjectNode {
   @Override
   public void add(String name, ObjectNode node) {
     this.jsonObject.add(name, (JsonObject) node.getNative());
+  }
+  
+  @Override
+  public void add(String name, NullNode node) {
+    this.jsonObject.add(name, (JsonNull) node.getNative());
   }
   
   @Override

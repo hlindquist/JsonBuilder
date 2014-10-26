@@ -1,6 +1,7 @@
 package org.jsonbuilder.implementations.mongodb;
 
 import org.jsonbuilder.interfaces.ArrayNode;
+import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.ObjectNode;
 
 import com.mongodb.BasicDBObject;
@@ -46,6 +47,11 @@ public class MongoDbObjectNode implements ObjectNode {
 
   @Override
   public void add(String name, ObjectNode node) {
+    basicDbObject.append(name, node.getNative());
+  }
+  
+  @Override
+  public void add(String name, NullNode node) {
     basicDbObject.append(name, node.getNative());
   }
   

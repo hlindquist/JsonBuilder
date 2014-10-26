@@ -105,18 +105,37 @@ public abstract class JsonBuilderTest {
   }
   
   @Test
-  public void shouldAddEmptyObjectIfOnlyKeyIsSpecified() {
-    StringBuilder multiLevel = new StringBuilder();
-    multiLevel.append("{").
-      append("\"first\":{}").
-      append("}");
+  public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() {
+    StringBuilder none = new StringBuilder();
+    none.append("{}");
     Object json = new JsonBuilder(this.getAdapter()).
         object("first").build();
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
-      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+      assertEquals(none.toString(), new JsonParser().parse(serialized).toString());
     } else {
-      assertEquals(multiLevel.toString(), json.toString());
+      assertEquals(none.toString(), json.toString());
+    }
+  }
+  
+  @Test
+  public void shouldAllowArrayWithinObjectOfObject() {
+    StringBuilder arrayInObject = new StringBuilder();
+    arrayInObject.append("{").
+      append("\"outer\":{\"inner\":[\"one\",2,null]}").
+      append("}");
+    Object nill = null;
+    Object json = new JsonBuilder(this.getAdapter()).
+        object("outer").
+        object("inner").
+        array("one").
+        array(2).
+        array(nill).build();
+    if(json instanceof DBObject) {
+      String serialized = JSON.serialize(json);
+      assertEquals(arrayInObject.toString(), new JsonParser().parse(serialized).toString());
+    } else {
+      assertEquals(arrayInObject.toString(), json.toString());
     }
   }
 }

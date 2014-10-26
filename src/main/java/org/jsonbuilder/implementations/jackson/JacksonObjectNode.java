@@ -2,6 +2,7 @@ package org.jsonbuilder.implementations.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode {
@@ -51,6 +52,11 @@ public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode 
   @Override
   public void add(String name, org.jsonbuilder.interfaces.ObjectNode node) {
     this.objectNode.put(name, (ObjectNode) node.getNative());
+  }
+  
+  @Override
+  public void add(String name, org.jsonbuilder.interfaces.NullNode node) {
+    this.objectNode.put(name, (NullNode) node.getNative());
   }
   
   @Override
