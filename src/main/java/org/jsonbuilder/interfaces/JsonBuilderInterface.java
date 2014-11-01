@@ -14,6 +14,7 @@ public interface JsonBuilderInterface {
   public JsonBuilder object(String name, Boolean value);
   public JsonBuilder object(String name, Object value);
   public JsonBuilder object(String name);
+  public JsonBuilder object();
   public JsonBuilder up();
   public Object build();
 }

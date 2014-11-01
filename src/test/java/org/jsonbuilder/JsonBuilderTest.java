@@ -3,6 +3,10 @@ package org.jsonbuilder;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -32,12 +36,11 @@ public abstract class JsonBuilderTest {
       .append("[4,6,7],")
       .append("{\"object\":7}")
       .append("]");
-    String nill = null;
     Object json = new JsonBuilder(this.getAdapter()).
       array("string", "stringtwo").
       array(5, 223).
       array(true, false).
-      array(nill, nill).
+      array((String) null, (String) null).
       array().array(4,6,7).up().
       object("object", 7).build();
     if(json instanceof ArrayList) {
@@ -73,12 +76,11 @@ public abstract class JsonBuilderTest {
       append("\"third\":3,").
       append("\"fourth\":null").
       append("}");
-    Object nill = null;
     Object json = new JsonBuilder(this.getAdapter()).
         object("first", "one").
         object("second", "two").
         object("third", 3).
-        object("fourth", nill).build();
+        object("fourth", (String) null).build();
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiValue.toString(), new JsonParser().parse(serialized).toString());
@@ -125,18 +127,55 @@ public abstract class JsonBuilderTest {
     arrayInObject.append("{").
       append("\"outer\":{\"inner\":[\"one\",2,null]}").
       append("}");
-    Object nill = null;
     Object json = new JsonBuilder(this.getAdapter()).
         object("outer").
         object("inner").
         array("one").
         array(2).
-        array(nill).build();
+        array((String) null).build();
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(arrayInObject.toString(), new JsonParser().parse(serialized).toString());
     } else {
       assertEquals(arrayInObject.toString(), json.toString());
+    }
+  }
+  
+  @Test
+  public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() {
+    StringBuilder allValues = new StringBuilder();
+    allValues.append("{\"array\":[")
+      .append("{\"object\":\"hey\",\"name\":\"ok\"},")
+      .append("{\"object\":\"hello\",\"name\":\"okk\"},")
+      .append("{\"object\":\"welcome\",\"name\":\"okkk\"}")
+      .append("]}");
+    JsonBuilder builder = new JsonBuilder(this.getAdapter()).
+        object("array").array();
+    List<Map> list = new ArrayList<Map>();
+    Map objects1 = new LinkedHashMap();
+    Map objects2 = new LinkedHashMap();
+    Map objects3 = new LinkedHashMap();
+    objects1.put("object", "hey");
+    objects1.put("name", "ok");
+    objects2.put("object", "hello");
+    objects2.put("name", "okk");
+    objects3.put("object", "welcome");
+    objects3.put("name", "okkk");
+    list.add(objects1);
+    list.add(objects2);
+    list.add(objects3);
+    for(Map<String, Object> objects : list) {
+      builder.object();
+      for(String key : objects.keySet()) {
+        builder.object(key, objects.get(key));
+      }
+      builder.up();
+    }
+    Object json = builder.build();
+    if(json instanceof DBObject) {
+      assertEquals(allValues.toString(), new Gson().toJson(json));
+    } else {
+      assertEquals(allValues.toString(), json.toString());
     }
   }
 }
