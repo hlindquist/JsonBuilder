@@ -144,11 +144,11 @@ public abstract class JsonBuilderTest {
   @Test
   public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() {
     StringBuilder allValues = new StringBuilder();
-    allValues.append("{\"array\":[")
-      .append("{\"object\":\"hey\",\"name\":\"ok\"},")
-      .append("{\"object\":\"hello\",\"name\":\"okk\"},")
-      .append("{\"object\":\"welcome\",\"name\":\"okkk\"}")
-      .append("]}");
+    allValues.append("{\"array\":[").
+      append("{\"object\":\"hey\",\"name\":\"ok\"},").
+      append("{\"object\":\"hello\",\"name\":\"okk\"},").
+      append("{\"object\":\"welcome\",\"name\":\"okkk\"}").
+      append("]}");
     JsonBuilder builder = new JsonBuilder(this.getAdapter()).
         object("array").array();
     List<Map> list = new ArrayList<Map>();
@@ -170,6 +170,26 @@ public abstract class JsonBuilderTest {
         builder.object(key, objects.get(key));
       }
       builder.up();
+    }
+    Object json = builder.build();
+    if(json instanceof DBObject) {
+      assertEquals(allValues.toString(), new Gson().toJson(json));
+    } else {
+      assertEquals(allValues.toString(), json.toString());
+    }
+  }
+  
+  @Test
+  public void shouldBePossibleToInsertIntoArrayWithLoop() {
+    StringBuilder allValues = new StringBuilder();
+    allValues.append("{\"array\":[").
+      append("\"string1\",\"string2\",\"string3\"").
+      append("]}");
+    JsonBuilder builder = new JsonBuilder(this.getAdapter()).
+      object("array");
+    String[] values = {"string1", "string2", "string3"};
+    for(String value : values) {
+      builder.array(value);
     }
     Object json = builder.build();
     if(json instanceof DBObject) {
