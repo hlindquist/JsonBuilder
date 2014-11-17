@@ -21,16 +21,15 @@ import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.ObjectNode;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.util.JSON;
 
 /**
  * @author Håkon Lindquist
  */
 public class MongoDbObjectNode implements ObjectNode {
-  
+
   private final BasicDBObject basicDbObject;
-  
-  public MongoDbObjectNode(){
+
+  public MongoDbObjectNode() {
     basicDbObject = new BasicDBObject();
   }
 
@@ -53,7 +52,7 @@ public class MongoDbObjectNode implements ObjectNode {
   public void addProperty(String name, Boolean value) {
     basicDbObject.append(name, value);
   }
-  
+
   @Override
   public void addProperty(String name, Object value) {
     basicDbObject.append(name, value);
@@ -68,12 +67,12 @@ public class MongoDbObjectNode implements ObjectNode {
   public void add(String name, ObjectNode node) {
     basicDbObject.append(name, node.getNative());
   }
-  
+
   @Override
   public void add(String name, NullNode node) {
     basicDbObject.append(name, node.getNative());
   }
-  
+
   public String toString() {
     return basicDbObject.toString();
   }

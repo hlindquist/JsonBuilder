@@ -28,7 +28,7 @@ import org.jsonbuilder.interfaces.StringNode;
  * @author Håkon Lindquist
  */
 public class JacksonAdapter implements JsonAdapter {
-  
+
   @Override
   public ObjectNode getObjectNode() {
     return new JacksonObjectNode();

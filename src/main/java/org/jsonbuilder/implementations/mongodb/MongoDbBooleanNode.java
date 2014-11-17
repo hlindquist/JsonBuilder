@@ -22,9 +22,9 @@ import org.jsonbuilder.interfaces.BooleanNode;
  * @author Håkon Lindquist
  */
 public class MongoDbBooleanNode implements BooleanNode {
-  
+
   private final Boolean value;
-  
+
   public MongoDbBooleanNode(Boolean value) {
     this.value = value;
   }

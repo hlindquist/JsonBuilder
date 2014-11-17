@@ -22,12 +22,13 @@ import com.fasterxml.jackson.databind.node.ValueNode;
 /**
  * @author Håkon Lindquist
  */
-public class JacksonBooleanNode implements org.jsonbuilder.interfaces.BooleanNode {
+public class JacksonBooleanNode implements
+    org.jsonbuilder.interfaces.BooleanNode {
 
   private final ValueNode value;
-  
+
   public JacksonBooleanNode(Boolean value) {
-    if(value) {
+    if (value) {
       this.value = BooleanNode.TRUE;
     } else {
       this.value = BooleanNode.FALSE;

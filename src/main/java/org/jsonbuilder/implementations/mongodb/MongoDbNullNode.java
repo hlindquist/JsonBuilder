@@ -28,5 +28,4 @@ public class MongoDbNullNode implements NullNode {
     // TODO Auto-generated method stub
     return null;
   }
-  
 }

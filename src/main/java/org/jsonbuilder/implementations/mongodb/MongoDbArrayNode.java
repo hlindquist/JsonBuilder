@@ -28,7 +28,7 @@ import com.mongodb.util.JSON;
  * @author Håkon Lindquist
  */
 public class MongoDbArrayNode implements ArrayNode {
-  
+
   private final List<Object> list;
 
   public MongoDbArrayNode() {
@@ -39,12 +39,12 @@ public class MongoDbArrayNode implements ArrayNode {
   public void add(JsonNode node) {
     list.add(node.getNative());
   }
-  
+
   @Override
   public Object getNative() {
     return list;
   }
-  
+
   public String toString() {
     return JSON.serialize(list);
   }

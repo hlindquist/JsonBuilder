@@ -2,5 +2,6 @@
 .gradle/
 .classpath
 .project
+.pmd
 bin
 build

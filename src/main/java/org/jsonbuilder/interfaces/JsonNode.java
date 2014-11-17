@@ -20,6 +20,6 @@ package org.jsonbuilder.interfaces;
  * @author Håkon Lindquist
  */
 public interface JsonNode {
-  
+
   public Object getNative();
 }

@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.node.ValueNode;
  * @author Håkon Lindquist
  */
 public class JacksonStringNode implements StringNode {
-  
+
   private final ValueNode value;
-  
+
   public JacksonStringNode(String value) {
     this.value = new TextNode(value);
   }

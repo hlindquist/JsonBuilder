@@ -26,7 +26,7 @@ import com.google.gson.JsonPrimitive;
 public class GsonBooleanNode implements BooleanNode {
 
   private final JsonPrimitive primitive;
-  
+
   public GsonBooleanNode(Boolean value) {
     primitive = new JsonPrimitive(value);
   }

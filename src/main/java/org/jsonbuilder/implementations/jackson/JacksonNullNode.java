@@ -23,9 +23,9 @@ import com.fasterxml.jackson.databind.node.ValueNode;
  * @author Håkon Lindquist
  */
 public class JacksonNullNode implements org.jsonbuilder.interfaces.NullNode {
-  
+
   private final ValueNode value;
-  
+
   public JacksonNullNode() {
     value = NullNode.instance;
   }

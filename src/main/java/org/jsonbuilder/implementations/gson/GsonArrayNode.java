@@ -26,9 +26,9 @@ import com.google.gson.JsonElement;
  * @author Håkon Lindquist
  */
 public class GsonArrayNode implements ArrayNode {
-  
+
   private final JsonArray jsonArray;
-  
+
   public GsonArrayNode() {
     this.jsonArray = new JsonArray();
   }
@@ -42,7 +42,7 @@ public class GsonArrayNode implements ArrayNode {
   public Object getNative() {
     return this.jsonArray;
   }
-  
+
   @Override
   public String toString() {
     return jsonArray.toString();

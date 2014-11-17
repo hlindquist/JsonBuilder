@@ -24,9 +24,9 @@ import com.google.gson.JsonPrimitive;
  * @author Håkon Lindquist
  */
 public class GsonStringNode implements StringNode {
-  
+
   private final JsonPrimitive primitive;
-  
+
   public GsonStringNode(String value) {
     primitive = new JsonPrimitive(value);
   }

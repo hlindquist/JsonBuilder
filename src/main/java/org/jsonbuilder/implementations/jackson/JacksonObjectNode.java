@@ -25,12 +25,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @author Håkon Lindquist
  */
 public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode {
-  
-  private static final ObjectMapper objectMapper = new ObjectMapper();
+
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private final ObjectNode objectNode;
-  
+
   public JacksonObjectNode() {
-    this.objectNode = objectMapper.createObjectNode();
+    this.objectNode = OBJECT_MAPPER.createObjectNode();
   }
 
   @Override
@@ -47,10 +47,10 @@ public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode 
   public void addProperty(String name, Boolean value) {
     this.objectNode.put(name, value);
   }
-  
+
   @Override
   public void addProperty(String name, Object value) {
-    if(value != null) {
+    if (value != null) {
       this.objectNode.put(name, value.toString());
     } else {
       String nill = null;
@@ -72,12 +72,12 @@ public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode 
   public void add(String name, org.jsonbuilder.interfaces.ObjectNode node) {
     this.objectNode.put(name, (ObjectNode) node.getNative());
   }
-  
+
   @Override
   public void add(String name, org.jsonbuilder.interfaces.NullNode node) {
     this.objectNode.put(name, (NullNode) node.getNative());
   }
-  
+
   @Override
   public String toString() {
     return this.objectNode.toString();

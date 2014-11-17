@@ -26,12 +26,12 @@ import com.fasterxml.jackson.databind.node.BaseJsonNode;
  * @author Håkon Lindquist
  */
 public class JacksonArrayNode implements org.jsonbuilder.interfaces.ArrayNode {
-  
-  private static final ObjectMapper objectMapper = new ObjectMapper();
+
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private final ArrayNode arrayNode;
-  
+
   public JacksonArrayNode() {
-    this.arrayNode = objectMapper.createArrayNode();
+    this.arrayNode = OBJECT_MAPPER.createArrayNode();
   }
 
   @Override
@@ -43,7 +43,7 @@ public class JacksonArrayNode implements org.jsonbuilder.interfaces.ArrayNode {
   public Object getNative() {
     return this.arrayNode;
   }
-  
+
   @Override
   public String toString() {
     return this.arrayNode.toString();

@@ -22,9 +22,9 @@ import org.jsonbuilder.interfaces.NumberNode;
  * @author Håkon Lindquist
  */
 public class MongoDbNumberNode implements NumberNode {
-  
+
   private final Number number;
-  
+
   public MongoDbNumberNode(Number number) {
     this.number = number;
   }

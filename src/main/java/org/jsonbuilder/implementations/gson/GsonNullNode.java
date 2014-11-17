@@ -24,9 +24,9 @@ import com.google.gson.JsonNull;
  * @author Håkon Lindquist
  */
 public class GsonNullNode implements NullNode {
-  
+
   private final JsonNull jsonNull;
-  
+
   public GsonNullNode() {
     this.jsonNull = JsonNull.INSTANCE;
   }

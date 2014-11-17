@@ -20,5 +20,4 @@ package org.jsonbuilder.interfaces;
  * @author Håkon Lindquist
  */
 public interface StringNode extends JsonNode {
-  
 }

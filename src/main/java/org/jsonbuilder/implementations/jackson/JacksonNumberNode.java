@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.node.ValueNode;
  * @author Håkon Lindquist
  */
 public class JacksonNumberNode implements NumberNode {
-  
+
   private final ValueNode value;
-  
+
   public JacksonNumberNode(Number number) {
     value = new LongNode((Integer) number);
   }
@@ -36,5 +36,4 @@ public class JacksonNumberNode implements NumberNode {
   public Object getNative() {
     return value;
   }
-  
 }

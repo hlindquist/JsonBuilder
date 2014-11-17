@@ -24,9 +24,9 @@ import com.google.gson.JsonPrimitive;
  * @author Håkon Lindquist
  */
 public class GsonNumberNode implements NumberNode {
-  
+
   private final JsonPrimitive primitive;
-  
+
   public GsonNumberNode(Number number) {
     primitive = new JsonPrimitive(number);
   }
@@ -35,5 +35,4 @@ public class GsonNumberNode implements NumberNode {
   public Object getNative() {
     return primitive;
   }
-  
 }

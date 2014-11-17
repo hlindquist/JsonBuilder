@@ -28,9 +28,9 @@ import com.google.gson.JsonObject;
  * @author Håkon Lindquist
  */
 public class GsonObjectNode implements ObjectNode {
-  
+
   private final JsonObject jsonObject;
-  
+
   public GsonObjectNode() {
     this.jsonObject = new JsonObject();
   }
@@ -49,10 +49,10 @@ public class GsonObjectNode implements ObjectNode {
   public void addProperty(String name, Boolean value) {
     this.jsonObject.addProperty(name, value);
   }
-  
+
   @Override
   public void addProperty(String name, Object value) {
-    if(value != null) {
+    if (value != null) {
       this.jsonObject.addProperty(name, value.toString());
     } else {
       String nill = null;
@@ -74,12 +74,12 @@ public class GsonObjectNode implements ObjectNode {
   public void add(String name, ObjectNode node) {
     this.jsonObject.add(name, (JsonObject) node.getNative());
   }
-  
+
   @Override
   public void add(String name, NullNode node) {
     this.jsonObject.add(name, (JsonNull) node.getNative());
   }
-  
+
   @Override
   public String toString() {
     return this.jsonObject.toString();

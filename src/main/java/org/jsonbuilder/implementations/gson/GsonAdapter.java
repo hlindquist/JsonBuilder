@@ -19,19 +19,16 @@ package org.jsonbuilder.implementations.gson;
 import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.BooleanNode;
 import org.jsonbuilder.interfaces.JsonAdapter;
-import org.jsonbuilder.interfaces.JsonNode;
 import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.NumberNode;
 import org.jsonbuilder.interfaces.ObjectNode;
 import org.jsonbuilder.interfaces.StringNode;
 
-import com.google.gson.JsonElement;
-
 /**
  * @author Håkon Lindquist
  */
 public class GsonAdapter implements JsonAdapter {
-  
+
   @Override
   public ObjectNode getObjectNode() {
     return new GsonObjectNode();
@@ -61,6 +58,4 @@ public class GsonAdapter implements JsonAdapter {
   public BooleanNode getBooleanNode(Boolean value) {
     return new GsonBooleanNode(value);
   }
-  
-  
 }
