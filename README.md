@@ -1,7 +1,8 @@
 ## JSON Builder
 
-The JSON builder project aims to solve the problem of learning multiple ways to build JSON structures in Java. JSON builder will help productivity if you often come across different libraries that essentially build JSON structures and you don`t rely exclusively on serialization of objects when building those structures. It does this by providing its own method of building JSON structures for multiple JSON libraries.
-Current implementation includes support for GSON, Jackson and MongoDB. Not much code is required to support additional implementations. 
+The JSON Builder project aims to solve the problem of learning multiple ways to build JSON structures in Java. JSON Builder will help productivity if you often come across different libraries that essentially build JSON structures and you don`t rely exclusively on serialization of objects when building those structures. It does this by providing its own method of building JSON structures for multiple JSON libraries. Current implementation includes support for GSON, Jackson and MongoDB. Not much code is required to support additional implementations.
+
+Please visit our GitHub Wiki for further documentation. 
 
 ### License
 

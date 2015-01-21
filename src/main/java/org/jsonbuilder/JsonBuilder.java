@@ -163,26 +163,22 @@ public class JsonBuilder implements JsonBuilderInterface {
     }
     return this;
   }
-
+  
   private void buildSuspendedBranch(ObjectNode objectNode) {
     LinkedList<ObjectNode> tempNodes = new LinkedList<ObjectNode>();
     tempNodes.add(objectNode);
-    while (!suspendedNames.isEmpty()) {
+    while (suspendedNames.size() > 1) {
       String suspendedName = suspendedNames.pollLast();
       ObjectNode suspendedObject = adapter.getObjectNode();
       suspendedObject.add(suspendedName, tempNodes.getLast());
       tempNodes.add(suspendedObject);
     }
+    if(!tempNodes.isEmpty() && stack.getLast() instanceof ObjectNode) {
+      ((ObjectNode) stack.getLast()).add(suspendedNames.pollLast(), tempNodes.pollLast());
+    }
     while (!tempNodes.isEmpty()) {
       stack.add(tempNodes.pollLast());
     }
-  }
-
-  private void addNullValueObject(String name, ObjectNode objectNode) {
-    NullNode nullNode = adapter.getNullNode();
-    objectNode.add(name, nullNode);
-    stack.add(objectNode);
-    stack.add(nullNode);
   }
 
   @Override

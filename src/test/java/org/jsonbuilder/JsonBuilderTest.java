@@ -19,7 +19,6 @@ package org.jsonbuilder;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,9 +111,11 @@ public abstract class JsonBuilderTest {
   public void shouldAllowMulitLevelObjects() {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
+      append("\"sibling\":\"first\",").
       append("\"first\":{\"second\":{\"third\":\"ok\"}}").
       append("}");
     Object json = new JsonBuilder(this.getAdapter()).
+        object("sibling", "first").
         object("first").
           object("second").
             object("third", "ok").build();
