@@ -173,8 +173,12 @@ public class JsonBuilder implements JsonBuilderInterface {
       suspendedObject.add(suspendedName, tempNodes.getLast());
       tempNodes.add(suspendedObject);
     }
-    if(!tempNodes.isEmpty() && stack.getLast() instanceof ObjectNode) {
+    if(!tempNodes.isEmpty() && !stack.isEmpty() && stack.getLast() instanceof ObjectNode) {
       ((ObjectNode) stack.getLast()).add(suspendedNames.pollLast(), tempNodes.pollLast());
+    } else {
+      ObjectNode suspendedObject = adapter.getObjectNode();
+      suspendedObject.add(suspendedNames.pollLast(), tempNodes.getLast());
+      stack.add(suspendedObject);
     }
     while (!tempNodes.isEmpty()) {
       stack.add(tempNodes.pollLast());

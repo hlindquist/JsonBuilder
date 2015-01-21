@@ -108,17 +108,37 @@ public abstract class JsonBuilderTest {
   }
   
   @Test
-  public void shouldAllowMulitLevelObjects() {
+  public void shouldAllowMulitLevelObjectsOnInstantiatedTree() {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"sibling\":\"first\",").
-      append("\"first\":{\"second\":{\"third\":\"ok\"}}").
+      append("\"first\":{\"second\":{\"third\":\"ok\",\"fourth\":\"sibling\"}}").
       append("}");
     Object json = new JsonBuilder(this.getAdapter()).
         object("sibling", "first").
         object("first").
           object("second").
-            object("third", "ok").build();
+            object("third", "ok").
+            object("fourth", "sibling").build();
+    if(json instanceof DBObject) {
+      String serialized = JSON.serialize(json);
+      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else {
+      assertEquals(multiLevel.toString(), json.toString());
+    }
+  }
+  
+  @Test
+  public void shouldAllowMulitLevelObjectsOnNullTree() {
+    StringBuilder multiLevel = new StringBuilder();
+    multiLevel.append("{").
+      append("\"first\":{\"second\":{\"third\":\"ok\",\"fourth\":\"sibling\"}}").
+      append("}");
+    Object json = new JsonBuilder(this.getAdapter()).
+        object("first").
+          object("second").
+            object("third", "ok").
+            object("fourth", "sibling").build();
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
