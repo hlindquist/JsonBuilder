@@ -148,6 +148,26 @@ public abstract class JsonBuilderTest {
   }
   
   @Test
+  public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() {
+    StringBuilder multiLevel = new StringBuilder();
+    multiLevel.append("{").
+      append("\"sibling\":\"first\",").
+      append("\"first\":{\"second\":[\"one\",\"two\"]}").
+      append("}");
+    Object json = new JsonBuilder(this.getAdapter()).
+        object("sibling", "first").
+        object("first").
+          object("second").
+            array("one", "two").build();
+    if(json instanceof DBObject) {
+      String serialized = JSON.serialize(json);
+      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else {
+      assertEquals(multiLevel.toString(), json.toString());
+    }
+  }
+  
+  @Test
   public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() {
     StringBuilder none = new StringBuilder();
     none.append("{}");
@@ -184,13 +204,14 @@ public abstract class JsonBuilderTest {
   @Test
   public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() {
     StringBuilder allValues = new StringBuilder();
-    allValues.append("{\"array\":[").
+    allValues.append("{\"first\":\"sibling\",\"root\":{\"array\":[").
       append("{\"object\":\"hey\",\"name\":\"ok\"},").
       append("{\"object\":\"hello\",\"name\":\"okk\"},").
       append("{\"object\":\"welcome\",\"name\":\"okkk\"}").
-      append("]}");
+      append("]}}");
     JsonBuilder builder = new JsonBuilder(this.getAdapter()).
-        object("array").array();
+        object("first", "sibling").
+        object("root").object("array").array();
     List<Map> list = new ArrayList<Map>();
     Map objects1 = new LinkedHashMap();
     Map objects2 = new LinkedHashMap();

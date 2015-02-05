@@ -42,7 +42,7 @@ public class JsonBuilder implements JsonBuilderInterface {
   public JsonBuilder array() {
     JsonNode emptyArray = adapter.getArrayNode();
     if (!suspendedNames.isEmpty()) {
-      buildArraySuspendedBranch();
+      buildSuspendedBranch(emptyArray);
     } else if (stack.isEmpty()) {
       stack.add(emptyArray);
     } else if (stack.getLast() instanceof ArrayNode) {
@@ -164,20 +164,35 @@ public class JsonBuilder implements JsonBuilderInterface {
     return this;
   }
   
-  private void buildSuspendedBranch(ObjectNode objectNode) {
-    LinkedList<ObjectNode> tempNodes = new LinkedList<ObjectNode>();
-    tempNodes.add(objectNode);
+  private void buildSuspendedBranch(JsonNode node) {
+    LinkedList<JsonNode> tempNodes = new LinkedList<JsonNode>();
+    tempNodes.add(node);
     while (suspendedNames.size() > 1) {
       String suspendedName = suspendedNames.pollLast();
       ObjectNode suspendedObject = adapter.getObjectNode();
-      suspendedObject.add(suspendedName, tempNodes.getLast());
+      Object lastNode = tempNodes.getLast();
+      if(lastNode instanceof ArrayNode) {
+        suspendedObject.add(suspendedName, (ArrayNode) lastNode);
+      } else if(lastNode instanceof ObjectNode) {
+        suspendedObject.add(suspendedName, (ObjectNode) lastNode);
+      }
       tempNodes.add(suspendedObject);
     }
     if(!tempNodes.isEmpty() && !stack.isEmpty() && stack.getLast() instanceof ObjectNode) {
-      ((ObjectNode) stack.getLast()).add(suspendedNames.pollLast(), tempNodes.pollLast());
+      Object lastNode = tempNodes.getLast();
+      if(lastNode instanceof ArrayNode) {
+        ((ObjectNode) stack.getLast()).add(suspendedNames.pollLast(), (ArrayNode) lastNode);
+      } else if(lastNode instanceof ObjectNode) {
+        ((ObjectNode) stack.getLast()).add(suspendedNames.pollLast(), (ObjectNode) lastNode);
+      }
     } else {
       ObjectNode suspendedObject = adapter.getObjectNode();
-      suspendedObject.add(suspendedNames.pollLast(), tempNodes.getLast());
+      Object lastNode = tempNodes.getLast();
+      if(lastNode instanceof ArrayNode) {
+        suspendedObject.add(suspendedNames.pollLast(), (ArrayNode) lastNode);
+      } else if(lastNode instanceof ObjectNode) {
+        suspendedObject.add(suspendedNames.pollLast(), (ObjectNode) lastNode);
+      }
       stack.add(suspendedObject);
     }
     while (!tempNodes.isEmpty()) {
@@ -201,7 +216,7 @@ public class JsonBuilder implements JsonBuilderInterface {
 
   private void insertIntoArray(Object... values) {
     if (!suspendedNames.isEmpty()) {
-      buildArraySuspendedBranch();
+      buildSuspendedBranch(adapter.getArrayNode());
     } else if (stack.isEmpty()) {
       stack.add(adapter.getArrayNode());
     }
@@ -220,24 +235,5 @@ public class JsonBuilder implements JsonBuilderInterface {
         }
       }
     }
-  }
-
-  private void buildArraySuspendedBranch() {
-    ArrayNode array = adapter.getArrayNode();
-    String suspendedName = suspendedNames.pollLast();
-    ObjectNode suspendedObject = adapter.getObjectNode();
-    suspendedObject.add(suspendedName, array);
-    LinkedList<ObjectNode> tempNodes = new LinkedList<ObjectNode>();
-    tempNodes.add(suspendedObject);
-    while (!suspendedNames.isEmpty()) {
-      String suspendedName2 = suspendedNames.pollLast();
-      ObjectNode suspendedObject2 = adapter.getObjectNode();
-      suspendedObject2.add(suspendedName2, tempNodes.getLast());
-      tempNodes.add(suspendedObject2);
-    }
-    while (!tempNodes.isEmpty()) {
-      stack.add(tempNodes.pollLast());
-    }
-    stack.add(array);
   }
 }
