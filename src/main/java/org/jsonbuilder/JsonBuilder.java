@@ -22,7 +22,6 @@ import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.JsonAdapter;
 import org.jsonbuilder.interfaces.JsonBuilderInterface;
 import org.jsonbuilder.interfaces.JsonNode;
-import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.ObjectNode;
 
 /**
@@ -199,10 +198,20 @@ public class JsonBuilder implements JsonBuilderInterface {
       stack.add(tempNodes.pollLast());
     }
   }
+  
+  @Override
+  public JsonBuilder root() {
+    while(stack.size() > 1) {
+      stack.removeLast();
+    }
+    return this;
+  }
 
   @Override
   public JsonBuilder up() {
-    stack.removeLast();
+    if(stack.size() > 1) {
+      stack.removeLast();
+    }
     return this;
   }
 

@@ -40,6 +40,34 @@ public abstract class JsonBuilderTest {
   protected abstract JsonAdapter getAdapter();
   
   @Test
+  public void upShouldNeverGoThroughTheFloor() {
+    String allValues = "{\"string\":\"hello\",\"integer\":5}";
+    Object json = new JsonBuilder(this.getAdapter()).
+        object("string", "hello").up().up().up().up().
+        object("integer", 5).build();
+    if(json instanceof DBObject) {
+      String serialized = JSON.serialize(json);
+      assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
+    } else {
+      assertEquals(allValues.toString(), json.toString());
+    }
+  }
+  
+  @Test
+  public void shouldBeAbleToGoStraightToRoot() {
+    String allValues = "{\"string\":{\"level1\":{\"level2\":\"hello\"}},\"integer\":5}";
+    Object json = new JsonBuilder(this.getAdapter()).
+        object("string").object("level1").object("level2", "hello").root().
+        object("integer", 5).build();
+    if(json instanceof DBObject) {
+      String serialized = JSON.serialize(json);
+      assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
+    } else {
+      assertEquals(allValues.toString(), json.toString());
+    }
+  }
+  
+  @Test
   public void shouldAllowAllJsonValuesInArray() {
     StringBuilder allValues = new StringBuilder();
     allValues.append("[")
@@ -146,6 +174,26 @@ public abstract class JsonBuilderTest {
       assertEquals(multiLevel.toString(), json.toString());
     }
   }
+  
+  // TODO
+//  @Test
+//  public void shouldAllowMulitLevelObjectsWithinArray() {
+//    StringBuilder multiLevel = new StringBuilder();
+//    multiLevel.append("{").
+//      append("\"first\":[{\"second\":{\"third\":\"ok\",\"fourth\":\"sibling\"}}]").
+//      append("}");
+//    Object json = new JsonBuilder(this.getAdapter()).
+//        object("first").array().
+//          object("second").
+//            object("third", "ok").
+//            object("fourth", "sibling").build();
+//    if(json instanceof DBObject) {
+//      String serialized = JSON.serialize(json);
+//      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+//    } else {
+//      assertEquals(multiLevel.toString(), json.toString());
+//    }
+//  }
   
   @Test
   public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() {

@@ -46,6 +46,8 @@ public interface JsonBuilderInterface {
   public JsonBuilder object();
 
   public JsonBuilder up();
+  
+  public JsonBuilder root();
 
   public Object build();
 }
