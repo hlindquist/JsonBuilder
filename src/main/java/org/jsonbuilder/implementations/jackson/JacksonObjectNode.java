@@ -34,28 +34,32 @@ public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode 
   }
 
   @Override
-  public void addProperty(String name, String value) {
+  public org.jsonbuilder.interfaces.ObjectNode addProperty(String name, String value) {
     this.objectNode.put(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Number value) {
+  public org.jsonbuilder.interfaces.ObjectNode addProperty(String name, Number value) {
     this.objectNode.put(name, (Integer) value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Boolean value) {
+  public org.jsonbuilder.interfaces.ObjectNode addProperty(String name, Boolean value) {
     this.objectNode.put(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Object value) {
+  public org.jsonbuilder.interfaces.ObjectNode addProperty(String name, Object value) {
     if (value != null) {
       this.objectNode.put(name, value.toString());
     } else {
       String nill = null;
       this.objectNode.put(name, nill);
     }
+    return this;
   }
 
   @Override
@@ -64,18 +68,21 @@ public class JacksonObjectNode implements org.jsonbuilder.interfaces.ObjectNode 
   }
 
   @Override
-  public void add(String name, org.jsonbuilder.interfaces.ArrayNode node) {
+  public org.jsonbuilder.interfaces.ObjectNode add(String name, org.jsonbuilder.interfaces.ArrayNode node) {
     this.objectNode.put(name, (ArrayNode) node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, org.jsonbuilder.interfaces.ObjectNode node) {
+  public org.jsonbuilder.interfaces.ObjectNode add(String name, org.jsonbuilder.interfaces.ObjectNode node) {
     this.objectNode.put(name, (ObjectNode) node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, org.jsonbuilder.interfaces.NullNode node) {
+  public org.jsonbuilder.interfaces.ObjectNode add(String name, org.jsonbuilder.interfaces.NullNode node) {
     this.objectNode.put(name, (NullNode) node.getNative());
+    return this;
   }
 
   @Override

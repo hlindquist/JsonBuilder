@@ -25,17 +25,17 @@ import org.jsonbuilder.interfaces.NullNode;
  */
 public interface ObjectNode extends JsonNode {
 
-  public void addProperty(String name, String value);
+  public ObjectNode addProperty(String name, String value);
 
-  public void addProperty(String name, Number value);
+  public ObjectNode addProperty(String name, Number value);
 
-  public void addProperty(String name, Boolean value);
+  public ObjectNode addProperty(String name, Boolean value);
 
-  public void addProperty(String name, Object value);
+  public ObjectNode addProperty(String name, Object value);
 
-  public void add(String name, ArrayNode node);
+  public ObjectNode add(String name, ArrayNode node);
 
-  public void add(String name, ObjectNode node);
+  public ObjectNode add(String name, ObjectNode node);
 
-  public void add(String name, NullNode node);
+  public ObjectNode add(String name, NullNode node);
 }

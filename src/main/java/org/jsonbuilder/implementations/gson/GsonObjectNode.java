@@ -36,28 +36,32 @@ public class GsonObjectNode implements ObjectNode {
   }
 
   @Override
-  public void addProperty(String name, String value) {
+  public ObjectNode addProperty(String name, String value) {
     this.jsonObject.addProperty(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Number value) {
+  public ObjectNode addProperty(String name, Number value) {
     this.jsonObject.addProperty(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Boolean value) {
+  public ObjectNode addProperty(String name, Boolean value) {
     this.jsonObject.addProperty(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Object value) {
+  public ObjectNode addProperty(String name, Object value) {
     if (value != null) {
       this.jsonObject.addProperty(name, value.toString());
     } else {
       String nill = null;
       this.jsonObject.addProperty(name, nill);
     }
+    return this;
   }
 
   @Override
@@ -66,18 +70,21 @@ public class GsonObjectNode implements ObjectNode {
   }
 
   @Override
-  public void add(String name, ArrayNode node) {
+  public ObjectNode add(String name, ArrayNode node) {
     this.jsonObject.add(name, (JsonArray) node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, ObjectNode node) {
+  public ObjectNode add(String name, ObjectNode node) {
     this.jsonObject.add(name, (JsonObject) node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, NullNode node) {
+  public ObjectNode add(String name, NullNode node) {
     this.jsonObject.add(name, (JsonNull) node.getNative());
+    return this;
   }
 
   @Override

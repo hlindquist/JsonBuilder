@@ -39,38 +39,45 @@ public class MongoDbObjectNode implements ObjectNode {
   }
 
   @Override
-  public void addProperty(String name, String value) {
+  public ObjectNode addProperty(String name, String value) {
     basicDbObject.append(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Number value) {
+  public ObjectNode addProperty(String name, Number value) {
     basicDbObject.append(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Boolean value) {
+  public ObjectNode addProperty(String name, Boolean value) {
     basicDbObject.append(name, value);
+    return this;
   }
 
   @Override
-  public void addProperty(String name, Object value) {
+  public ObjectNode addProperty(String name, Object value) {
     basicDbObject.append(name, value);
+    return this;
   }
 
   @Override
-  public void add(String name, ArrayNode node) {
+  public ObjectNode add(String name, ArrayNode node) {
     basicDbObject.append(name, node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, ObjectNode node) {
+  public ObjectNode add(String name, ObjectNode node) {
     basicDbObject.append(name, node.getNative());
+    return this;
   }
 
   @Override
-  public void add(String name, NullNode node) {
+  public ObjectNode add(String name, NullNode node) {
     basicDbObject.append(name, node.getNative());
+    return this;
   }
 
   public String toString() {
