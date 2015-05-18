@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
+package org.jsonbuilder.implementation.jsonsimple;
 
-repositories {
-  mavenCentral()
-}
+import org.jsonbuilder.JsonBuilderTest;
+import org.jsonbuilder.implementations.gson.GsonAdapter;
+import org.jsonbuilder.interfaces.JsonAdapter;
 
-version = '0.2.8'
+/**
+ * @author Håkon Lindquist
+ */
+public class JsonBuilderSimpleTest extends JsonBuilderTest {
 
-dependencies {
-  compile 'org.mongodb:mongo-java-driver:2.12.3'
-  compile 'junit:junit:4.11'
-  compile 'com.google.code.gson:gson:2.2'
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
-  compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
-  compile 'org.json:json:20141113'
-  compile 'com.googlecode.json-simple:json-simple:1.1.1'
+  @Override
+  protected JsonAdapter getAdapter() {
+    return new GsonAdapter();
+  }
 }
