@@ -16,6 +16,7 @@
 
 package org.jsonbuilder;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -25,8 +26,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import org.json.simple.parser.ParseException;
 import org.jsonbuilder.interfaces.JsonAdapter;
 
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.mongodb.DBObject;
@@ -40,7 +43,7 @@ public abstract class JsonBuilderTest {
   protected abstract JsonAdapter getAdapter();
   
   @Test
-  public void upShouldNeverGoThroughTheFloor() {
+  public void upShouldNeverGoThroughTheFloor() throws ParseException {
     String allValues = "{\"string\":\"hello\",\"integer\":5}";
     Object json = new JsonBuilder(this.getAdapter()).
         object("string", "hello").up().up().up().up().
@@ -48,13 +51,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldBeAbleToGoStraightToRoot() {
+  public void shouldBeAbleToGoStraightToRoot() throws ParseException {
     String allValues = "{\"string\":{\"level1\":{\"level2\":\"hello\"}},\"integer\":5}";
     Object json = new JsonBuilder(this.getAdapter()).
         object("string").object("level1").object("level2", "hello").root().
@@ -62,6 +68,9 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
@@ -114,7 +123,7 @@ public abstract class JsonBuilderTest {
   }
   
   @Test
-  public void shouldAllowMultiStringValueObjects() {
+  public void shouldAllowMultiStringValueObjects() throws ParseException {
     StringBuilder multiValue = new StringBuilder();
     multiValue.append("{").
       append("\"first\":\"one\",").
@@ -130,13 +139,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiValue.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiValue.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(multiValue.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsOnInstantiatedTree() {
+  public void shouldAllowMulitLevelObjectsOnInstantiatedTree() throws ParseException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"sibling\":\"first\",").
@@ -151,13 +163,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsOnNullTree() {
+  public void shouldAllowMulitLevelObjectsOnNullTree() throws ParseException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"first\":{\"second\":{\"third\":\"ok\",\"fourth\":\"sibling\"}}").
@@ -170,13 +185,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsWithinArray() {
+  public void shouldAllowMulitLevelObjectsWithinArray() throws ParseException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"first\":[{\"second\":{\"third\":{\"fourth\":\"ok\",\"fifth\":\"sibling\"}}}]").
@@ -190,13 +208,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() {
+  public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() throws ParseException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"sibling\":\"first\",").
@@ -210,13 +231,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() {
+  public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() throws ParseException {
     StringBuilder none = new StringBuilder();
     none.append("{}");
     Object json = new JsonBuilder(this.getAdapter()).
@@ -224,13 +248,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(none.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(none.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(none.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowArrayWithinObjectOfObject() {
+  public void shouldAllowArrayWithinObjectOfObject() throws ParseException {
     StringBuilder arrayInObject = new StringBuilder();
     arrayInObject.append("{").
       append("\"outer\":{\"inner\":[\"one\",2,null]}").
@@ -244,13 +271,16 @@ public abstract class JsonBuilderTest {
     if(json instanceof DBObject) {
       String serialized = JSON.serialize(json);
       assertEquals(arrayInObject.toString(), new JsonParser().parse(serialized).toString());
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(arrayInObject.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(arrayInObject.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() {
+  public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() throws ParseException {
     StringBuilder allValues = new StringBuilder();
     allValues.append("{\"first\":\"sibling\",\"root\":{\"array\":[").
       append("{\"object\":\"hey\",\"name\":\"ok\"},").
@@ -283,13 +313,16 @@ public abstract class JsonBuilderTest {
     Object json = builder.build();
     if(json instanceof DBObject) {
       assertEquals(allValues.toString(), new Gson().toJson(json));
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
   }
   
   @Test
-  public void shouldBePossibleToInsertIntoArrayWithLoop() {
+  public void shouldBePossibleToInsertIntoArrayWithLoop() throws ParseException {
     StringBuilder allValues = new StringBuilder();
     allValues.append("{\"array\":[").
       append("\"string1\",\"string2\",\"string3\"").
@@ -303,6 +336,9 @@ public abstract class JsonBuilderTest {
     Object json = builder.build();
     if(json instanceof DBObject) {
       assertEquals(allValues.toString(), new Gson().toJson(json));
+    } else if(json instanceof org.json.simple.JSONObject) {
+      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }

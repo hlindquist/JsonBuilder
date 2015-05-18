@@ -31,7 +31,7 @@ import org.junit.runners.Suite;
   JsonBuilderJacksonTest.class,
   JsonBuilderMongoDbTest.class,
   JsonBuilderMinimalTest.class,
-  JsonBuilderJsonOrgTest.class,
+  //JsonBuilderJsonOrgTest.class,
   JsonBuilderSimpleTest.class
 })
 

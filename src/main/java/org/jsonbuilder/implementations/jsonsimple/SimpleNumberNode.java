@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.internal.interfaces;
+package org.jsonbuilder.implementations.jsonsimple;
 
-public interface TreeNode {
-  
-  public TreeNode getParent();
+import org.jsonbuilder.interfaces.NumberNode;
+
+/**
+ * @author Håkon Lindquist
+ */
+public class SimpleNumberNode implements NumberNode {
+
+  private final Number number;
+
+  public SimpleNumberNode(Number number) {
+    this.number = number;
+  }
+
+  @Override
+  public Object getNative() {
+    return number;
+  }
 }

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+
 import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.NullNode;
 import org.jsonbuilder.interfaces.ObjectNode;
@@ -25,11 +26,11 @@ import org.jsonbuilder.interfaces.ObjectNode;
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgObjectNode implements ObjectNode {
+public class SmartObjectNode implements ObjectNode {
   
   private final JSONObject jsonObject;
   
-  public JsonOrgObjectNode() {
+  public SmartObjectNode() {
     this.jsonObject = new JSONObject();
   }
 

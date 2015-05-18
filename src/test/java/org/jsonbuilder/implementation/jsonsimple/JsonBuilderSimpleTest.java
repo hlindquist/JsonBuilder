@@ -17,7 +17,7 @@
 package org.jsonbuilder.implementation.jsonsimple;
 
 import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.gson.GsonAdapter;
+import org.jsonbuilder.implementations.jsonsimple.SimpleAdapter;
 import org.jsonbuilder.interfaces.JsonAdapter;
 
 /**
@@ -27,6 +27,6 @@ public class JsonBuilderSimpleTest extends JsonBuilderTest {
 
   @Override
   protected JsonAdapter getAdapter() {
-    return new GsonAdapter();
+    return new SimpleAdapter();
   }
 }

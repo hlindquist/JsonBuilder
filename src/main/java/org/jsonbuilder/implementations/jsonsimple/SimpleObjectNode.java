@@ -41,7 +41,15 @@ public class SimpleObjectNode implements ObjectNode {
 
   @Override
   public ObjectNode addProperty(String name, Number value) {
-    this.jsonObject.put(name, value);
+    if(value instanceof Double) {
+      this.jsonObject.put(name, (Double) value);
+    } else if(value instanceof Integer) {
+      this.jsonObject.put(name, (Long) value.longValue());
+    } else if(value instanceof Float) {
+      this.jsonObject.put(name, (Float) value);
+    } else if(value instanceof Long) {
+      this.jsonObject.put(name, (Long) value);
+    }
     return this;
   }
 

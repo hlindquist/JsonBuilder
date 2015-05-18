@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementation.jsonorg;
+package org.jsonbuilder.implementation.jsonsmart;
 
 import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.jsonorg.JsonOrgAdapter;
+import org.jsonbuilder.implementations.gson.GsonAdapter;
 import org.jsonbuilder.interfaces.JsonAdapter;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonBuilderJsonOrgTest extends JsonBuilderTest {
+public class JsonBuilderSmartTest extends JsonBuilderTest {
 
   @Override
   protected JsonAdapter getAdapter() {
-    return new JsonOrgAdapter();
+    return new GsonAdapter();
   }
 }

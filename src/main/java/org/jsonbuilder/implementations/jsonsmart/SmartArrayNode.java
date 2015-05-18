@@ -14,24 +14,36 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.internal;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import java.util.LinkedList;
+import net.minidev.json.JSONArray;
 
+import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.JsonNode;
-import org.jsonbuilder.internal.interfaces.TreeNode;
 
-public class JsonArray extends LinkedList<JsonNode> implements TreeNode {
+/**
+ * @author Håkon Lindquist
+ */
+public class SmartArrayNode implements ArrayNode {
   
-  private static final long serialVersionUID = -5413178723517184585L;
+  private final JSONArray jsonArray;
   
-  TreeNode parent;
-  
-  public JsonArray(TreeNode parent) {
-    this.parent = parent;
+  public SmartArrayNode() {
+    this.jsonArray = new JSONArray();
   }
   
-  public TreeNode getParent() {
-    return parent;
+  @Override
+  public void add(JsonNode node) {
+    this.jsonArray.add(node.getNative());
+  }
+
+  @Override
+  public Object getNative() {
+    return this.jsonArray;
+  }
+  
+  @Override
+  public String toString() {
+    return this.jsonArray.toString();
   }
 }
