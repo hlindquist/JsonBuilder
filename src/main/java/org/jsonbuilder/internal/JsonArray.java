@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
+package org.jsonbuilder.internal;
 
-repositories {
-  mavenCentral()
-}
+import java.util.LinkedList;
 
-version = '0.2.8'
+import org.jsonbuilder.interfaces.JsonNode;
+import org.jsonbuilder.internal.interfaces.TreeNode;
 
-dependencies {
-  compile 'org.mongodb:mongo-java-driver:2.12.3'
-  compile 'junit:junit:4.11'
-  compile 'com.google.code.gson:gson:2.2'
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
-  compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
-  compile 'org.json:json:20141113'
+public class JsonArray extends LinkedList<JsonNode> implements TreeNode {
+  
+  private static final long serialVersionUID = -5413178723517184585L;
+  
+  TreeNode parent;
+  
+  public JsonArray(TreeNode parent) {
+    this.parent = parent;
+  }
+  
+  public TreeNode getParent() {
+    return parent;
+  }
 }

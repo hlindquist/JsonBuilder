@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
+package org.jsonbuilder.internal.interfaces;
 
-repositories {
-  mavenCentral()
-}
-
-version = '0.2.8'
-
-dependencies {
-  compile 'org.mongodb:mongo-java-driver:2.12.3'
-  compile 'junit:junit:4.11'
-  compile 'com.google.code.gson:gson:2.2'
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
-  compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
-  compile 'org.json:json:20141113'
+public interface TreeNode {
+  
+  public TreeNode getParent();
 }

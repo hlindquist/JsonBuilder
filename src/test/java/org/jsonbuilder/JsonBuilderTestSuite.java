@@ -18,7 +18,9 @@ package org.jsonbuilder;
 
 import org.jsonbuilder.implementation.gson.JsonBuilderGsonTest;
 import org.jsonbuilder.implementation.jackson.JsonBuilderJacksonTest;
+import org.jsonbuilder.implementation.minimaljson.JsonBuilderMinimalTest;
 import org.jsonbuilder.implementation.mongodb.JsonBuilderMongoDbTest;
+import org.jsonbuilder.implementation.jsonorg.JsonBuilderJsonOrgTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -26,7 +28,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   JsonBuilderGsonTest.class,
   JsonBuilderJacksonTest.class,
-  JsonBuilderMongoDbTest.class
+  JsonBuilderMongoDbTest.class,
+  JsonBuilderMinimalTest.class,
+  JsonBuilderJsonOrgTest.class
 })
 
 /**

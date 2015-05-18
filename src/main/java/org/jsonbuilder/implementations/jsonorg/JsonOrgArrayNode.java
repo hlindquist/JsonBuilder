@@ -14,38 +14,35 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jackson;
+package org.jsonbuilder.implementations.jsonorg;
 
+import org.json.JSONArray;
+import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.JsonNode;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.BaseJsonNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JacksonArrayNode implements org.jsonbuilder.interfaces.ArrayNode {
-
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-  private final ArrayNode arrayNode;
-
-  public JacksonArrayNode() {
-    this.arrayNode = OBJECT_MAPPER.createArrayNode();
+public class JsonOrgArrayNode implements ArrayNode {
+  
+  private final JSONArray jsonArray;
+  
+  public JsonOrgArrayNode() {
+    this.jsonArray = new JSONArray();
   }
-
+  
   @Override
   public void add(JsonNode node) {
-    this.arrayNode.add((BaseJsonNode) node.getNative());
+    this.jsonArray.put(node.getNative());
   }
 
   @Override
   public Object getNative() {
-    return this.arrayNode;
+    return this.jsonArray;
   }
-
+  
   @Override
   public String toString() {
-    return this.arrayNode.toString();
+    return this.jsonArray.toString();
   }
 }

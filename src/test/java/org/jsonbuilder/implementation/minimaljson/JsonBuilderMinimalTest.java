@@ -14,37 +14,19 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.gson;
+package org.jsonbuilder.implementation.minimaljson;
 
-import org.jsonbuilder.interfaces.ArrayNode;
-import org.jsonbuilder.interfaces.JsonNode;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import org.jsonbuilder.JsonBuilderTest;
+import org.jsonbuilder.implementations.gson.GsonAdapter;
+import org.jsonbuilder.interfaces.JsonAdapter;
 
 /**
  * @author Håkon Lindquist
  */
-public class GsonArrayNode implements ArrayNode {
-
-  private final JsonArray jsonArray;
-
-  public GsonArrayNode() {
-    this.jsonArray = new JsonArray();
-  }
+public class JsonBuilderMinimalTest extends JsonBuilderTest {
 
   @Override
-  public void add(JsonNode node) {
-    this.jsonArray.add((JsonElement) node.getNative());
-  }
-
-  @Override
-  public Object getNative() {
-    return this.jsonArray;
-  }
-
-  @Override
-  public String toString() {
-    return this.jsonArray.toString();
+  protected JsonAdapter getAdapter() {
+    return new GsonAdapter();
   }
 }
