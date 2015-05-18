@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.minimaljson;
 
 import org.jsonbuilder.interfaces.ArrayNode;
 import org.jsonbuilder.interfaces.BooleanNode;
@@ -27,35 +27,35 @@ import org.jsonbuilder.interfaces.StringNode;
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgAdapter implements JsonAdapter {
+public class MinimalAdapter implements JsonAdapter {
 
   @Override
   public ObjectNode getObjectNode() {
-    return new JsonOrgObjectNode();
+    return new MinimalObjectNode();
   }
 
   @Override
   public ArrayNode getArrayNode() {
-    return new JsonOrgArrayNode();
+    return new MinimalArrayNode();
   }
 
   @Override
   public NullNode getNullNode() {
-    return new JsonOrgNullNode();
+    return new MinimalNullNode();
   }
 
   @Override
   public NumberNode getNumberNode(Number number) {
-    return new JsonOrgNumberNode(number);
+    return new MinimalNumberNode(number);
   }
 
   @Override
   public StringNode getStringNode(String value) {
-    return new JsonOrgStringNode(value);
+    return new MinimalStringNode(value);
   }
 
   @Override
   public BooleanNode getBooleanNode(Boolean value) {
-    return new JsonOrgBooleanNode(value);
+    return new MinimalBooleanNode(value);
   }
 }

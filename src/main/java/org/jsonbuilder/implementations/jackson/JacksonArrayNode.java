@@ -35,8 +35,9 @@ public class JacksonArrayNode implements org.jsonbuilder.interfaces.ArrayNode {
   }
 
   @Override
-  public void add(JsonNode node) {
+  public org.jsonbuilder.interfaces.ArrayNode add(JsonNode node) {
     this.arrayNode.add((BaseJsonNode) node.getNative());
+    return this;
   }
 
   @Override

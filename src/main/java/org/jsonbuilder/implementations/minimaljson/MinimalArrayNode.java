@@ -34,8 +34,26 @@ public class MinimalArrayNode implements ArrayNode {
   }
   
   @Override
-  public void add(JsonNode node) {
-    this.jsonArray.add((JsonValue) node.getNative());
+  public ArrayNode add(JsonNode node) {
+    Object value = node.getNative();
+    if(value instanceof JsonValue) {
+      this.jsonArray.add((JsonValue) value);
+    } else if(value instanceof Integer) {
+      this.jsonArray.add((Integer) value);
+    } else if(value instanceof Boolean) {
+      this.jsonArray.add((Boolean) value);
+    } else if(value instanceof Double) {
+      this.jsonArray.add((Double) value);
+    } else if(value instanceof Float) {
+      this.jsonArray.add((Float) value);
+    } else if(value instanceof Long) {
+      this.jsonArray.add((Long) value);
+    } else if(value instanceof String) {
+      this.jsonArray.add((String) value);
+    } else if(value == null) {
+      this.jsonArray.add((String) value);
+    }
+    return this;
   }
 
   @Override

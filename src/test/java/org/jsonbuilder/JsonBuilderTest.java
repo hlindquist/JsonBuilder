@@ -54,6 +54,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
@@ -71,6 +74,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
@@ -123,7 +129,7 @@ public abstract class JsonBuilderTest {
   }
   
   @Test
-  public void shouldAllowMultiStringValueObjects() throws ParseException {
+  public void shouldAllowMultiStringValueObjects() throws ParseException, net.minidev.json.parser.ParseException {
     StringBuilder multiValue = new StringBuilder();
     multiValue.append("{").
       append("\"first\":\"one\",").
@@ -142,6 +148,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiValue.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiValue.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(multiValue.toString(), json.toString());
     }
@@ -166,6 +175,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
@@ -188,6 +200,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
@@ -211,6 +226,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
@@ -234,6 +252,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(multiLevel.toString(), json.toString());
     }
@@ -251,6 +272,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(none.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(none.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(none.toString(), json.toString());
     }
@@ -274,6 +298,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(arrayInObject.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(arrayInObject.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(arrayInObject.toString(), json.toString());
     }
@@ -316,6 +343,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }
@@ -339,6 +369,9 @@ public abstract class JsonBuilderTest {
     } else if(json instanceof org.json.simple.JSONObject) {
       org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
       assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
+    } else if(json instanceof net.minidev.json.JSONObject) {
+      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
+      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
     } else {
       assertEquals(allValues.toString(), json.toString());
     }

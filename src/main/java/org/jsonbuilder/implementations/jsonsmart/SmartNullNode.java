@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementation.jsonsmart;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.jsonsmart.SmartAdapter;
-import org.jsonbuilder.interfaces.JsonAdapter;
+import org.jsonbuilder.interfaces.NullNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonBuilderSmartTest extends JsonBuilderTest {
+public class SmartNullNode implements NullNode {
 
   @Override
-  protected JsonAdapter getAdapter() {
-    return new SmartAdapter();
+  public Object getNative() {
+    return null;
   }
 }

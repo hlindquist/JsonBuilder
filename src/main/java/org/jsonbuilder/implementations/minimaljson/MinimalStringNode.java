@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.minimaljson;
 
-import org.jsonbuilder.interfaces.NullNode;
+import org.jsonbuilder.interfaces.StringNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgNullNode implements NullNode {
+public class MinimalStringNode implements StringNode {
+
+  private final String value;
+
+  public MinimalStringNode(String value) {
+    this.value = value;
+  }
 
   @Override
   public Object getNative() {
-    return null;
+    return value;
   }
 }

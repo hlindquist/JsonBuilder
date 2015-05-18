@@ -14,35 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.minimaljson;
 
-import org.json.JSONArray;
-import org.jsonbuilder.interfaces.ArrayNode;
-import org.jsonbuilder.interfaces.JsonNode;
+import org.jsonbuilder.interfaces.NumberNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgArrayNode implements ArrayNode {
-  
-  private final JSONArray jsonArray;
-  
-  public JsonOrgArrayNode() {
-    this.jsonArray = new JSONArray();
-  }
-  
-  @Override
-  public void add(JsonNode node) {
-    this.jsonArray.put(node.getNative());
+public class MinimalNumberNode implements NumberNode {
+
+  private final Number number;
+
+  public MinimalNumberNode(Number number) {
+    this.number = number;
   }
 
   @Override
   public Object getNative() {
-    return this.jsonArray;
-  }
-  
-  @Override
-  public String toString() {
-    return this.jsonArray.toString();
+    return number;
   }
 }

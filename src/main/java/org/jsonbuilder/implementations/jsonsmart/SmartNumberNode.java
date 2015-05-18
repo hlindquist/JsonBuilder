@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementation.jsonorg;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.jsonorg.JsonOrgAdapter;
-import org.jsonbuilder.interfaces.JsonAdapter;
+import org.jsonbuilder.interfaces.NumberNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonBuilderJsonOrgTest extends JsonBuilderTest {
+public class SmartNumberNode implements NumberNode {
+
+  private final Number number;
+
+  public SmartNumberNode(Number number) {
+    this.number = number;
+  }
 
   @Override
-  protected JsonAdapter getAdapter() {
-    return new JsonOrgAdapter();
+  public Object getNative() {
+    return number;
   }
 }

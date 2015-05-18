@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementation.jsonsmart;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.jsonsmart.SmartAdapter;
-import org.jsonbuilder.interfaces.JsonAdapter;
+import org.jsonbuilder.interfaces.BooleanNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonBuilderSmartTest extends JsonBuilderTest {
+public class SmartBooleanNode implements BooleanNode {
+
+  private final Boolean value;
+
+  public SmartBooleanNode(Boolean value) {
+    this.value = value;
+  }
 
   @Override
-  protected JsonAdapter getAdapter() {
-    return new SmartAdapter();
+  public Object getNative() {
+    return this.value;
   }
 }

@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.jsonsmart;
 
-import org.jsonbuilder.interfaces.NumberNode;
+import org.jsonbuilder.interfaces.StringNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgNumberNode implements NumberNode {
+public class SmartStringNode implements StringNode {
 
-  private final Number number;
+  private final String value;
 
-  public JsonOrgNumberNode(Number number) {
-    this.number = number;
+  public SmartStringNode(String value) {
+    this.value = value;
   }
 
   @Override
   public Object getNative() {
-    return number;
+    return value;
   }
 }

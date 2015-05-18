@@ -36,8 +36,9 @@ public class MongoDbArrayNode implements ArrayNode {
   }
 
   @Override
-  public void add(JsonNode node) {
+  public ArrayNode add(JsonNode node) {
     list.add(node.getNative());
+    return this;
   }
 
   @Override

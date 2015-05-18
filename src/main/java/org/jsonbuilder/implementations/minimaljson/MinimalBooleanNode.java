@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package org.jsonbuilder.implementations.jsonorg;
+package org.jsonbuilder.implementations.minimaljson;
 
-import org.jsonbuilder.interfaces.StringNode;
+import org.jsonbuilder.interfaces.BooleanNode;
 
 /**
  * @author Håkon Lindquist
  */
-public class JsonOrgStringNode implements StringNode {
+public class MinimalBooleanNode implements BooleanNode {
 
-  private final String value;
+  private final Boolean value;
 
-  public JsonOrgStringNode(String value) {
+  public MinimalBooleanNode(Boolean value) {
     this.value = value;
   }
 
   @Override
   public Object getNative() {
-    return value;
+    return this.value;
   }
 }

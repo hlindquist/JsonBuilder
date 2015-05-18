@@ -33,8 +33,9 @@ public class SmartArrayNode implements ArrayNode {
   }
   
   @Override
-  public void add(JsonNode node) {
+  public ArrayNode add(JsonNode node) {
     this.jsonArray.add(node.getNative());
+    return this;
   }
 
   @Override

@@ -31,13 +31,14 @@ public class SimpleArrayNode implements ArrayNode {
   }
 
   @Override
-  public void add(JsonNode node) {
+  public ArrayNode add(JsonNode node) {
     Object value = node.getNative();
     if(value instanceof Integer) {
       this.jsonArray.add(((Integer) value).longValue());
     } else {
       this.jsonArray.add(value);
     }
+    return this;
   }
   
   @Override

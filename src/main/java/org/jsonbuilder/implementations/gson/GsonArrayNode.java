@@ -34,8 +34,9 @@ public class GsonArrayNode implements ArrayNode {
   }
 
   @Override
-  public void add(JsonNode node) {
+  public ArrayNode add(JsonNode node) {
     this.jsonArray.add((JsonElement) node.getNative());
+    return this;
   }
 
   @Override

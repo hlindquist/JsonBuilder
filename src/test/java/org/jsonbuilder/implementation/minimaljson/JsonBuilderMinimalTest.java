@@ -17,7 +17,7 @@
 package org.jsonbuilder.implementation.minimaljson;
 
 import org.jsonbuilder.JsonBuilderTest;
-import org.jsonbuilder.implementations.gson.GsonAdapter;
+import org.jsonbuilder.implementations.minimaljson.MinimalAdapter;
 import org.jsonbuilder.interfaces.JsonAdapter;
 
 /**
@@ -27,6 +27,6 @@ public class JsonBuilderMinimalTest extends JsonBuilderTest {
 
   @Override
   protected JsonAdapter getAdapter() {
-    return new GsonAdapter();
+    return new MinimalAdapter();
   }
 }
