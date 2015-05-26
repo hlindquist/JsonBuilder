@@ -95,7 +95,7 @@ project(':tests') {
 }
 
 List<String> allSubProjects = [':core',':gson',':jackson',':jsonsimple',':jsonsmart',':minimaljson',':mongodb']
-task deploy( type: Jar , dependsOn: build) {
+task pack( type: Jar , dependsOn: build) {
   if(project.hasProperty('libs')) {
     def partialSubProjects = project.getProperty('libs').split(",")
     allSubProjects = partialSubProjects.collect{it as String} + "core";
