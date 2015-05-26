@@ -1,0 +1,1 @@
+include ':core', ':gson', ':jackson', ':jsonsimple', ':jsonsmart', ':minimaljson', ':mongodb', ':tests'

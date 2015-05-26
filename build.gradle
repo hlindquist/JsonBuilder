@@ -13,26 +13,93 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+version = '0.2.10'
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-
-repositories {
-  mavenCentral()
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  
+  repositories {
+    mavenCentral()
+  }
 }
 
-version = '0.2.9'
+project(':core') {
+}
+ 
+project(':gson') {
+  dependencies {
+    compile project(':core')
+    compile 'com.google.code.gson:gson:2.2'
+  }
+}
 
-dependencies {
-  compile 'org.mongodb:mongo-java-driver:2.12.3'
-  compile 'com.google.code.gson:gson:2.2'
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-  compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
-  compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
-  compile 'org.json:json:20141113'
-  compile 'com.googlecode.json-simple:json-simple:1.1.1'
-  compile 'net.minidev:json-smart:2.1.1'
+project(':jackson') {
+  dependencies {
+    compile project(':core')
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
+  }
+}
+
+project(':jsonsimple') {
+  dependencies {
+    compile project(':core')
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+  }
+}
+
+project(':jsonsmart') {
+  dependencies {
+    compile project(':core')
+    compile 'net.minidev:json-smart:2.1.1'
+  }
+}
+
+project(':minimaljson') {
+  dependencies {
+    compile project(':core')
+    compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
+  }
+}
+
+project(':mongodb') {
+  dependencies {
+    compile project(':core')
+    compile 'org.mongodb:mongo-java-driver:2.12.3'
+  }
+}
+
+
+project(':tests') {
+  dependencies {
+    compile 'junit:junit:4.11'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.gson:gson:2.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'net.minidev:json-smart:2.1.1'
+    compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
+    compile 'org.mongodb:mongo-java-driver:2.12.3'
+    compile project(':core')
+    compile project(':gson')
+    compile project(':jackson')
+    compile project(':jsonsimple')
+    compile project(':jsonsmart')
+    compile project(':minimaljson')
+    compile project(':mongodb')
+  }
   
-  testCompile 'junit:junit:4.11'
-  testCompile 'com.google.guava:guava:18.0'
+  test.dependsOn(":gson:build")
+}
+
+List<String> allSubProjects = [':core',':gson',':jackson',':jsonsimple',':jsonsmart',':minimaljson',':mongodb']
+task deploy( type: Jar , dependsOn: build) {
+  if(project.hasProperty('libs')) {
+    def partialSubProjects = project.getProperty('libs').split(",")
+    allSubProjects = partialSubProjects.collect{it as String} + "core";
+  }
+  baseName = 'JsonBuilder'
+  from files(allSubProjects.collect{ project(it).sourceSets.main.output })
 }
