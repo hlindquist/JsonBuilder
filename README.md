@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 ## JsonBuilder
+=======
+## JSON Builder
+
+[![Join the chat at https://gitter.im/Homyk/JSON-Builder](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Homyk/JSON-Builder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+>>>>>>> 725bc13b91ae0df17e8e0f4f104dbadd950c23ac
 
 The JsonBuilder project aims to solve the problem of learning multiple ways to build JSON structures in Java. JsonBuilder will help productivity if you often come across different libraries that essentially build JSON structures and you do not rely exclusively on serialization of objects when building those structures. It does this by providing its own method of building JSON structures for multiple JSON libraries. Current implementation includes support for GSON, Jackson, MongoDB, json-simple, json-smart and minimal-json. There are not much work required to support additional implementations. Please let me know if you need help.
 
