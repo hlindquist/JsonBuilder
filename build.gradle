@@ -74,14 +74,7 @@ project(':mongodb') {
 project(':tests') {
   dependencies {
     compile 'junit:junit:4.11'
-    compile 'com.google.guava:guava:18.0'
-    compile 'com.google.code.gson:gson:2.2'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.1.4'
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile 'net.minidev:json-smart:2.1.1'
-    compile 'com.eclipsesource.minimal-json:minimal-json:0.9.2'
-    compile 'org.mongodb:mongo-java-driver:2.12.3'
+    compile 'org.skyscreamer:jsonassert:1.2.3'
     compile project(':core')
     compile project(':gson')
     compile project(':jackson')

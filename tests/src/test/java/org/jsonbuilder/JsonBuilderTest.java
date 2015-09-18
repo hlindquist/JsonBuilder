@@ -16,24 +16,16 @@
 
 package org.jsonbuilder;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-
+import org.json.JSONException;
 import org.json.simple.parser.ParseException;
 import org.jsonbuilder.interfaces.JsonAdapter;
-
-import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Håkon Lindquist
@@ -43,47 +35,25 @@ public abstract class JsonBuilderTest {
   protected abstract JsonAdapter getAdapter();
   
   @Test
-  public void upShouldNeverGoThroughTheFloor() throws ParseException {
+  public void upShouldNeverGoThroughTheFloor() throws ParseException, JSONException {
     String allValues = "{\"string\":\"hello\",\"integer\":5}";
     Object json = new JsonBuilder(this.getAdapter()).
         object("string", "hello").up().up().up().up().
         object("integer", 5).build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(allValues.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(allValues, json.toString(), false);
   }
   
   @Test
-  public void shouldBeAbleToGoStraightToRoot() throws ParseException {
+  public void shouldBeAbleToGoStraightToRoot() throws ParseException, JSONException {
     String allValues = "{\"string\":{\"level1\":{\"level2\":\"hello\"}},\"integer\":5}";
     Object json = new JsonBuilder(this.getAdapter()).
         object("string").object("level1").object("level2", "hello").root().
         object("integer", 5).build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(allValues.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues);
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(allValues.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(allValues, json.toString(), false);
   }
   
   @Test
-  public void shouldAllowAllJsonValuesInArray() {
+  public void shouldAllowAllJsonValuesInArray() throws JSONException {
     StringBuilder allValues = new StringBuilder();
     allValues.append("[")
       .append("\"string\",")
@@ -104,15 +74,11 @@ public abstract class JsonBuilderTest {
       array((String) null, (String) null).
       array().array(4,6,7).up().
       object("object", 7).build();
-    if(json instanceof ArrayList) {
-      assertEquals(allValues.toString(), new Gson().toJson(json));
-    } else {
-      assertEquals(allValues.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(allValues.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMultilevelArraysWithObjects() {
+  public void shouldAllowMultilevelArraysWithObjects() throws JSONException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("[").
       append("4,6,[10,{\"last\":true}]").
@@ -121,15 +87,11 @@ public abstract class JsonBuilderTest {
         array(4,6).
         array().array(10).
         object("last", true).build();
-    if(json instanceof ArrayList) {
-      assertEquals(multiLevel.toString(), new Gson().toJson(json));
-    } else {
-      assertEquals(multiLevel.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiLevel.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMultiStringValueObjects() throws ParseException, net.minidev.json.parser.ParseException {
+  public void shouldAllowMultiStringValueObjects() throws ParseException, net.minidev.json.parser.ParseException, JSONException {
     StringBuilder multiValue = new StringBuilder();
     multiValue.append("{").
       append("\"first\":\"one\",").
@@ -142,22 +104,11 @@ public abstract class JsonBuilderTest {
         object("second", "two").
         object("third", 3).
         object("fourth", (String) null).build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(multiValue.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiValue.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiValue.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(multiValue.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiValue.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsOnInstantiatedTree() throws ParseException {
+  public void shouldAllowMulitLevelObjectsOnInstantiatedTree() throws ParseException, JSONException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"sibling\":\"first\",").
@@ -169,22 +120,11 @@ public abstract class JsonBuilderTest {
           object("second").
             object("third", "ok").
             object("fourth", "sibling").build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(multiLevel.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiLevel.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsOnNullTree() throws ParseException {
+  public void shouldAllowMulitLevelObjectsOnNullTree() throws ParseException, JSONException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"first\":{\"second\":{\"third\":\"ok\",\"fourth\":\"sibling\"}}").
@@ -194,22 +134,11 @@ public abstract class JsonBuilderTest {
           object("second").
             object("third", "ok").
             object("fourth", "sibling").build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(multiLevel.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiLevel.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMulitLevelObjectsWithinArray() throws ParseException {
+  public void shouldAllowMulitLevelObjectsWithinArray() throws ParseException, JSONException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"first\":[{\"second\":{\"third\":{\"fourth\":\"ok\",\"fifth\":\"sibling\"}}}]").
@@ -220,22 +149,11 @@ public abstract class JsonBuilderTest {
             object("third").
               object("fourth", "ok").
               object("fifth", "sibling").build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(multiLevel.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiLevel.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() throws ParseException {
+  public void shouldAllowMulitLevelArrayObjectOnInstantiatedTree() throws ParseException, JSONException {
     StringBuilder multiLevel = new StringBuilder();
     multiLevel.append("{").
       append("\"sibling\":\"first\",").
@@ -246,42 +164,20 @@ public abstract class JsonBuilderTest {
         object("first").
           object("second").
             array("one", "two").build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(multiLevel.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(multiLevel.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(multiLevel.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(multiLevel.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() throws ParseException {
+  public void shouldNotAddAnythingYetIfOnlyKeyIsSpecified() throws ParseException, JSONException {
     StringBuilder none = new StringBuilder();
     none.append("{}");
     Object json = new JsonBuilder(this.getAdapter()).
         object("first").build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(none.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(none.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(none.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(none.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(none.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowArrayWithinObjectOfObject() throws ParseException {
+  public void shouldAllowArrayWithinObjectOfObject() throws ParseException, JSONException {
     StringBuilder arrayInObject = new StringBuilder();
     arrayInObject.append("{").
       append("\"outer\":{\"inner\":[\"one\",2,null]}").
@@ -292,22 +188,11 @@ public abstract class JsonBuilderTest {
         array("one").
         array(2).
         array((String) null).build();
-    if(json instanceof DBObject) {
-      String serialized = JSON.serialize(json);
-      assertEquals(arrayInObject.toString(), new JsonParser().parse(serialized).toString());
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(arrayInObject.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(arrayInObject.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(arrayInObject.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(arrayInObject.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() throws ParseException {
+  public void shouldAllowArrayValueWithLoopPopulationOfMultiValueObjects() throws ParseException, JSONException {
     StringBuilder allValues = new StringBuilder();
     allValues.append("{\"first\":\"sibling\",\"root\":{\"array\":[").
       append("{\"object\":\"hey\",\"name\":\"ok\"},").
@@ -338,21 +223,11 @@ public abstract class JsonBuilderTest {
       builder.up();
     }
     Object json = builder.build();
-    if(json instanceof DBObject) {
-      assertEquals(allValues.toString(), new Gson().toJson(json));
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(allValues.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(allValues.toString(), json.toString(), false);
   }
   
   @Test
-  public void shouldBePossibleToInsertIntoArrayWithLoop() throws ParseException {
+  public void shouldBePossibleToInsertIntoArrayWithLoop() throws ParseException, JSONException {
     StringBuilder allValues = new StringBuilder();
     allValues.append("{\"array\":[").
       append("\"string1\",\"string2\",\"string3\"").
@@ -364,16 +239,6 @@ public abstract class JsonBuilderTest {
       builder.array(value);
     }
     Object json = builder.build();
-    if(json instanceof DBObject) {
-      assertEquals(allValues.toString(), new Gson().toJson(json));
-    } else if(json instanceof org.json.simple.JSONObject) {
-      org.json.simple.JSONObject parsedJson = (org.json.simple.JSONObject) new org.json.simple.parser.JSONParser().parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (org.json.simple.JSONObject) json).areEqual());
-    } else if(json instanceof net.minidev.json.JSONObject) {
-      net.minidev.json.JSONObject parsedJson = (net.minidev.json.JSONObject) net.minidev.json.JSONValue.parse(allValues.toString());
-      assertTrue(Maps.difference(parsedJson, (net.minidev.json.JSONObject) json).areEqual());
-    } else {
-      assertEquals(allValues.toString(), json.toString());
-    }
+    JSONAssert.assertEquals(allValues.toString(), json.toString(), false);
   }
 }
